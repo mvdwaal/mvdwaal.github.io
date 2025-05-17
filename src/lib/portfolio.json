@@ -1,0 +1,47 @@
+[
+    {
+        "image": "BlauwKopje.jpg",
+        "title": "Blauw kopje",
+        "description": "Kopje geïnspireerd op de illustraties van 'De mooiste vis van de zee'"
+    },
+    {
+        "image": "RozeKopjes.jpg",
+        "title": "Roze kopjes",
+        "description": "Roze kopjes met zelfontwikkeld glazuur"
+    },
+    {
+        "image": "HartjesKopjes.jpg",
+        "title": "Hartjeskopjes",
+        "description": "Koffiekopjes met handgeschilderde hartjes"
+    },
+    {
+        "image": "Bloesembord.jpg",
+        "title": "Bloesembord",
+        "description": "Blauw bord met sgraffitodecoratie"
+    },
+    {
+        "image": "BordHeksenkind.jpg",
+        "title": "Bord Heksenkind",
+        "description": "Bord met handgeschilderde decoratie, geïnspireerd op illustraties van het boek 'Heksenkind'"
+    },
+    {
+        "image": "BordPuffins.jpg",
+        "title": "Bord met Puffins",
+        "description": "Bord met handgeschilderde decoratie van Puffins in Schotland"
+    },
+    {
+        "image": "DekselpotSpikkel.jpg",
+        "title": "Spikkelpot",
+        "description": "Dekselpot met vrolijk gekleurde spikkels"
+    },
+    {
+        "image": "KanBloem.jpg",
+        "title": "Aardewerken kan",
+        "description": "Aardewerken kan met bloem"
+    },
+    {
+        "image": "BlauweVaas.jpg",
+        "title": "Lichtblauwe vaas",
+        "description": "Lichtblauw vaasje met gekleurde spikkels"
+    }
+]
