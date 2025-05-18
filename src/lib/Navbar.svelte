@@ -70,4 +70,10 @@
   .navigation:hover {
     transform: translateY(-2px);
   }
+
+  @media (max-width: 768px) {
+    .buttons {
+      display: none;
+    }
+  }
 </style>
