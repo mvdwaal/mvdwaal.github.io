@@ -31,6 +31,8 @@
       touchStartX: 0,
       touchStartY: 0,
       touchEndX: 0,
+      isPinching: false,
+      initialTouchDistance: 0,
     };
   });
 
@@ -48,25 +50,49 @@
   }
 
   function handleTouchStart(event: TouchEvent, item: any) {
-    item.touchStartX = event.touches[0].clientX;
-    item.touchStartY = event.touches[0].clientY;
+    if (event.touches.length === 1) {
+      // Single touch - track for swipe
+      item.touchStartX = event.touches[0].clientX;
+      item.touchStartY = event.touches[0].clientY;
+      item.isPinching = false;
+    } else if (event.touches.length === 2) {
+      // Two touches - track for pinch
+      item.isPinching = true;
+      const touch1 = event.touches[0];
+      const touch2 = event.touches[1];
+      item.initialTouchDistance = Math.hypot(
+        touch2.clientX - touch1.clientX,
+        touch2.clientY - touch1.clientY
+      );
+    }
   }
 
   function handleTouchMove(event: TouchEvent, item: any) {
-    const touchX = event.touches[0].clientX;
-    const touchY = event.touches[0].clientY;
-    const deltaX = Math.abs(touchX - item.touchStartX);
-    const deltaY = Math.abs(touchY - item.touchStartY);
-
-    // If the horizontal movement is greater than vertical, prevent scrolling
-    if (deltaX > deltaY) {
+    if (item.isPinching) {
+      // During pinch, prevent any swipe behavior
       event.preventDefault();
+      return;
+    }
+
+    if (event.touches.length === 1) {
+      const touchX = event.touches[0].clientX;
+      const touchY = event.touches[0].clientY;
+      const deltaX = Math.abs(touchX - item.touchStartX);
+      const deltaY = Math.abs(touchY - item.touchStartY);
+
+      // If the horizontal movement is greater than vertical, prevent scrolling
+      if (deltaX > deltaY) {
+        event.preventDefault();
+      }
     }
   }
 
   function handleTouchEnd(event: TouchEvent, item: any) {
-    item.touchEndX = event.changedTouches[0].clientX;
-    handleSwipe(item);
+    if (!item.isPinching) {
+      item.touchEndX = event.changedTouches[0].clientX;
+      handleSwipe(item);
+    }
+    item.isPinching = false;
   }
 
   function handleSwipe(item: any) {
