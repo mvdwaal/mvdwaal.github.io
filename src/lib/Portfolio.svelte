@@ -13,16 +13,22 @@
     "Fleur",
   ];
 
-  const allImages = import.meta.glob("../assets/Portfolio/*/*.jpg", {
-    eager: true,
-  });
+  // Load both WebP and JPG images
+  const allImages = {
+    webp: import.meta.glob("../assets/Portfolio/*/*.webp", { eager: true }),
+    jpg: import.meta.glob("../assets/Portfolio/*/*.jpg", { eager: true }),
+  };
 
   let items = itemsToShow.map((item: string) => {
-    const images = Object.fromEntries(
-      Object.entries(allImages).filter(([path]) => path.includes(item)),
+    const webpImages = Object.fromEntries(
+      Object.entries(allImages.webp).filter(([path]) => path.includes(item)),
+    );
+    const jpgImages = Object.fromEntries(
+      Object.entries(allImages.jpg).filter(([path]) => path.includes(item)),
     );
 
-    const imagePaths = Object.keys(images);
+    // Use JPG paths as the base since we might not have WebP for all images yet
+    const imagePaths = Object.keys(jpgImages);
 
     return {
       images: imagePaths,
@@ -140,7 +146,19 @@
           >
             {#each item.images as imagePath}
               <div class="slide">
-                <img src={allImages[imagePath].default} alt={item.title} />
+                <picture>
+                  {#if allImages.webp[imagePath.replace('.jpg', '.webp')]}
+                    <source
+                      srcset={allImages.webp[imagePath.replace('.jpg', '.webp')].default}
+                      type="image/webp"
+                    />
+                  {/if}
+                  <img
+                    src={allImages.jpg[imagePath].default}
+                    alt={item.title}
+                    loading="lazy"
+                  />
+                </picture>
               </div>
             {/each}
           </div>
@@ -285,5 +303,18 @@
     font-size: 1.2rem;
     margin: 1rem;
     color: #333;
+  }
+
+  .slide picture {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .slide img {
+    width: 100%;
+    height: 500px;
+    object-fit: cover;
+    display: block;
   }
 </style>
