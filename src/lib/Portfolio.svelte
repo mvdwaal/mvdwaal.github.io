@@ -33,6 +33,7 @@
       touchEndX: 0,
       isPinching: false,
       initialTouchDistance: 0,
+      wasPinching: false,
     };
   });
 
@@ -58,6 +59,7 @@
     } else if (event.touches.length === 2) {
       // Two touches - track for pinch
       item.isPinching = true;
+      item.wasPinching = true;
       const touch1 = event.touches[0];
       const touch2 = event.touches[1];
       item.initialTouchDistance = Math.hypot(
@@ -82,11 +84,19 @@
   }
 
   function handleTouchEnd(event: TouchEvent, item: any) {
-    if (!item.isPinching) {
-      item.touchEndX = event.changedTouches[0].clientX;
-      handleSwipe(item);
+    if (event.touches.length === 0) {
+      // All fingers are released
+      if (!item.wasPinching) {
+        // Only process swipe if we weren't pinching
+        item.touchEndX = event.changedTouches[0].clientX;
+        handleSwipe(item);
+      }
+      item.isPinching = false;
+      item.wasPinching = false;
+    } else if (event.touches.length === 1) {
+      // One finger remains - keep wasPinching true to prevent swipe
+      item.wasPinching = true;
     }
-    item.isPinching = false;
   }
 
   function handleSwipe(item: any) {
