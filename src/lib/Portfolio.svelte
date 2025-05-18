@@ -29,6 +29,7 @@
       title: item,
       currentImageIndex: 0,
       touchStartX: 0,
+      touchStartY: 0,
       touchEndX: 0,
     };
   });
@@ -48,6 +49,19 @@
 
   function handleTouchStart(event: TouchEvent, item: any) {
     item.touchStartX = event.touches[0].clientX;
+    item.touchStartY = event.touches[0].clientY;
+  }
+
+  function handleTouchMove(event: TouchEvent, item: any) {
+    const touchX = event.touches[0].clientX;
+    const touchY = event.touches[0].clientY;
+    const deltaX = Math.abs(touchX - item.touchStartX);
+    const deltaY = Math.abs(touchY - item.touchStartY);
+
+    // If the horizontal movement is greater than vertical, prevent scrolling
+    if (deltaX > deltaY) {
+      event.preventDefault();
+    }
   }
 
   function handleTouchEnd(event: TouchEvent, item: any) {
@@ -87,6 +101,7 @@
         <div
           class="slideshow"
           on:touchstart={(e) => handleTouchStart(e, item)}
+          on:touchmove={(e) => handleTouchMove(e, item)}
           on:touchend={(e) => handleTouchEnd(e, item)}
         >
           <div
