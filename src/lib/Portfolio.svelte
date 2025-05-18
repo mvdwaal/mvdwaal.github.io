@@ -17,7 +17,9 @@
     return {
       images: imagePaths,
       title: item.title,
-      currentImageIndex: 0
+      currentImageIndex: 0,
+      touchStartX: 0,
+      touchEndX: 0
     };
   });
 
@@ -30,6 +32,34 @@
     item.currentImageIndex = Math.min(item.currentImageIndex + 1, item.images.length - 1);
     items = items;
   }
+
+  function handleTouchStart(event: TouchEvent, item: any) {
+    item.touchStartX = event.touches[0].clientX;
+  }
+
+  function handleTouchEnd(event: TouchEvent, item: any) {
+    item.touchEndX = event.changedTouches[0].clientX;
+    handleSwipe(item);
+  }
+
+  function handleSwipe(item: any) {
+    const swipeThreshold = 50; // minimum distance for a swipe
+    const swipeDistance = item.touchEndX - item.touchStartX;
+
+    if (Math.abs(swipeDistance) > swipeThreshold) {
+      if (swipeDistance > 0) {
+        // Swiped right, go to previous
+        if (item.currentImageIndex > 0) {
+          previousImage(item);
+        }
+      } else {
+        // Swiped left, go to next
+        if (item.currentImageIndex < item.images.length - 1) {
+          nextImage(item);
+        }
+      }
+    }
+  }
 </script>
 
 <section class="gallery" id="portfolio">
@@ -41,7 +71,10 @@
   <div class="grid">
     {#each items as item}
       <div class="item">
-        <div class="slideshow">
+        <div class="slideshow"
+          on:touchstart={(e) => handleTouchStart(e, item)}
+          on:touchend={(e) => handleTouchEnd(e, item)}
+        >
           <div class="slideshow-container" style="transform: translateX({-item.currentImageIndex * 100}%)">
             {#each item.images as imagePath}
               <div class="slide">
@@ -119,16 +152,19 @@
   .slideshow {
     position: relative;
     overflow: hidden;
+    width: 100%;
   }
 
   .slideshow-container {
     display: flex;
     transition: transform 0.3s ease-in-out;
+    width: 100%;
   }
 
   .slide {
     min-width: 100%;
     flex-shrink: 0;
+    width: 100%;
   }
 
   .slideshow img {
