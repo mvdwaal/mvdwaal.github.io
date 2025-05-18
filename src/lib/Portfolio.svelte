@@ -1,25 +1,35 @@
-<script lang='ts'>
-  import portfolio from './portfolio.json';
-  import leftArrow from '../assets/Icons/left-arrow.svg';
-  import rightArrow from '../assets/Icons/right-arrow.svg';
+<script lang="ts">
+  import leftArrow from "../assets/Icons/left-arrow.svg";
+  import rightArrow from "../assets/Icons/right-arrow.svg";
 
-  const images: Record<string, { default: string }> = import.meta.glob('../assets/*.jpg', { eager: true });
+  const itemsToShow = [
+    "Amethist",
+    "Heksenkind",
+    "Korstmos",
+    "Jade",
+    "Borealis",
+    "Koraal",
+    "Silva",
+    "Fleur",
+  ];
 
-  let items = portfolio.map(item => {
-    const imagePaths = item.images.map(imageName => {
-      const path = Object.keys(images).find(key => key.endsWith(imageName));
-      if (!path) {
-        console.warn(`Image not found for: ${imageName}`);
-      }
-      return path;
-    }).filter(Boolean);
+  const allImages = import.meta.glob("../assets/Portfolio/*/*.jpg", {
+    eager: true,
+  });
+
+  let items = itemsToShow.map((item: string) => {
+    const images = Object.fromEntries(
+      Object.entries(allImages).filter(([path]) => path.includes(item)),
+    );
+
+    const imagePaths = Object.keys(images);
 
     return {
       images: imagePaths,
-      title: item.title,
+      title: item,
       currentImageIndex: 0,
       touchStartX: 0,
-      touchEndX: 0
+      touchEndX: 0,
     };
   });
 
@@ -29,7 +39,10 @@
   }
 
   function nextImage(item: any) {
-    item.currentImageIndex = Math.min(item.currentImageIndex + 1, item.images.length - 1);
+    item.currentImageIndex = Math.min(
+      item.currentImageIndex + 1,
+      item.images.length - 1,
+    );
     items = items;
   }
 
@@ -67,21 +80,22 @@
     <h2>Portfolio</h2>
     <p>Een selectie van mijn handgemaakte keramiek</p>
   </div>
-  
+
   <div class="grid">
     {#each items as item}
       <div class="item">
-        <div class="slideshow"
+        <div
+          class="slideshow"
           on:touchstart={(e) => handleTouchStart(e, item)}
           on:touchend={(e) => handleTouchEnd(e, item)}
         >
-          <div class="slideshow-container" style="transform: translateX({-item.currentImageIndex * 100}%)">
+          <div
+            class="slideshow-container"
+            style="transform: translateX({-item.currentImageIndex * 100}%)"
+          >
             {#each item.images as imagePath}
               <div class="slide">
-                <img 
-                  src={images[imagePath].default} 
-                  alt={item.title} 
-                />
+                <img src={allImages[imagePath].default} alt={item.title} />
               </div>
             {/each}
           </div>
@@ -102,7 +116,7 @@
             {/if}
           </div>
         </div>
-        <h3>{item.title}</h3>
+        <p>{item.title}</p>
       </div>
     {/each}
   </div>
@@ -137,7 +151,7 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 2rem;
-    max-width: 1200px;
+    max-width: 1300px;
     margin: 0 auto;
   }
 
@@ -222,9 +236,9 @@
     height: 32px;
   }
 
-  .item h3 {
+  .item p {
     font-size: 1.2rem;
     margin: 1rem;
     color: #333;
   }
-</style> 
+</style>
