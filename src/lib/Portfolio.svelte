@@ -1,7 +1,7 @@
 <script lang='ts'>
   import portfolio from './portfolio.json';
-  import leftArrow from '../assets/icons/left-arrow.svg';
-  import rightArrow from '../assets/icons/right-arrow.svg';
+  import leftArrow from '../assets/Icons/left-arrow.svg';
+  import rightArrow from '../assets/Icons/right-arrow.svg';
 
   const images: Record<string, { default: string }> = import.meta.glob('../assets/*.jpg', { eager: true });
 
@@ -79,6 +79,7 @@
   .gallery {
     padding: 4rem 2rem;
     background-color: white;
+    scroll-margin-top: 32px;
   }
 
   .header {
