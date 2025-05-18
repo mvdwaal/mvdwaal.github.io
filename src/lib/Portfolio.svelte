@@ -68,12 +68,6 @@
   }
 
   function handleTouchMove(event: TouchEvent, item: any) {
-    if (item.isPinching) {
-      // During pinch, prevent any swipe behavior
-      event.preventDefault();
-      return;
-    }
-
     if (event.touches.length === 1) {
       const touchX = event.touches[0].clientX;
       const touchY = event.touches[0].clientY;
