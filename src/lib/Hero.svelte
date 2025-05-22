@@ -1,5 +1,5 @@
 <script>
-  import forestBackground from '../assets/forestSummer.jpeg?url';
+  import background from '../assets/productOverzicht.jpg?url';
 
   function scrollToSection(sectionId) {
     const element = document.getElementById(sectionId);
@@ -15,7 +15,7 @@
 
 <section class="hero">
   <div class="background-container">
-    <img src={forestBackground} alt="" class="background-image" />
+    <img src={background} alt="" class="background-image" />
     <div class="overlay"></div>
   </div>
   <div class="content">
@@ -44,7 +44,7 @@
 
   .background-container {
     position: absolute;
-    top: 0;
+    top: 50px;
     left: 0;
     width: 100%;
     height: 100%;
@@ -62,7 +62,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.6);
   }
 
   .content {

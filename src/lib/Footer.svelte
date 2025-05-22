@@ -1,7 +1,14 @@
 <script>
   // Import beach background image
-  import beachImage from '../assets/forestBackground.jpg';
+  import beachImage from "../assets/forestSummer.jpeg?url";
+
+  const mail = "keramiek@mayravanderwaal.nl";
+  const instagram = "https://www.instagram.com/mayraskleipraatjes/";
 </script>
+
+<svelte:head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</svelte:head>
 
 <footer id="contact">
   <div class="background-container">
@@ -10,8 +17,17 @@
   </div>
   <div class="content">
     <h2>Contact</h2>
-    <p>Voor vragen of opdrachten, neem gerust contact op</p>
-    <a href="mailto:keramiek@mayravanderwaal.nl" class="contact-button">Email mij</a>
+    <p>Heb je interesse in mijn werk? Stuur een mailtje of volg me op Instagram!</p>
+    <div class="contact-buttons">
+      <a href={`mailto:${mail}`} class="contact-button" target="_blank" rel="noopener noreferrer">
+        <i class="fas fa-envelope"></i>
+        <span>{mail}</span>
+      </a>
+      <a href={instagram} class="contact-button" target="_blank" rel="noopener noreferrer">
+        <i class="fab fa-instagram"></i>
+        <span>@mayraskleipraatjes</span>
+      </a>
+    </div>
   </div>
 </footer>
 
@@ -43,7 +59,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.1))
+    background: rgba(0, 0, 0, 0.6);
   }
 
   .content {
@@ -68,18 +84,34 @@
     margin: 0 0 2rem;
   }
 
+  .contact-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    background: rgba(0, 0, 0, 0.6);
+  }
+
   .contact-button {
-    display: inline-block;
-    padding: 1rem 2rem;
-    background-color: white;
-    color: #333;
-    text-decoration: none;
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    border: 2px solid white;
+    color: white;
+    background-color: transparent;
     border-radius: 4px;
-    font-size: 1.1rem;
+    cursor: pointer;
     transition: transform 0.2s;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    text-decoration: none;
+  }
+
+  .contact-button i {
+    font-size: 1.2rem;
   }
 
   .contact-button:hover {
     transform: translateY(-2px);
   }
-</style> 
+</style>
