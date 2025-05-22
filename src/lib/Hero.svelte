@@ -1,5 +1,5 @@
 <script>
-  import background from '../assets/ProductOverzicht.jpg';
+  import background from '../assets/Productoverzicht.jpg?url';
 
   function scrollToSection(sectionId) {
     const element = document.getElementById(sectionId);
