@@ -7,7 +7,7 @@
     "Heksenkind",
     "Korstmos",
     "Jade",
-    "Borealis",
+    "Arborealis",
     "Koraal",
     "Silva",
     "Fleur",
