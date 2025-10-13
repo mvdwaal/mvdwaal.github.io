@@ -8,8 +8,11 @@
     "Korstmos",
     "Jade",
     "Arborealis",
-    "Koraal",
     "Silva",
+    "Pebbles",
+    "Chiocciola",
+    "Zandloper",
+    "Koraal",
     "Fleur",
   ];
 
